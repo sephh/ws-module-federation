@@ -102,6 +102,7 @@ module.exports = (_, args) => {
         exposes: {
         },
         remotes: {
+          auth: process.env.AUTH_MODULE
         },
         shared: {
           ...dependencies,
