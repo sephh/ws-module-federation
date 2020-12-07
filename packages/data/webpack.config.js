@@ -18,7 +18,7 @@ module.exports = (_, args) => {
     mode: args.mode,
 
     optimization: {
-      minimize: args.mode === 'production',
+      hints: args.mode === 'production' ? 'warning' : false,
     },
 
     performance: {
@@ -100,6 +100,9 @@ module.exports = (_, args) => {
         name: 'data',
         filename: process.env.FILENAME,
         exposes: {
+          './PokemonProvider': './src/providers/PokemonProvider',
+          './SearchBar': './src/components/SearchBar',
+          './pokemon.hook': './src/hooks/pokemon.hook'
         },
         remotes: {
           auth: process.env.AUTH_MODULE
