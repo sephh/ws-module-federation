@@ -1,104 +1,95 @@
-# Consumindo módulos da Federação
+# Data Management
 
-Nessa branch vamos consumir o módulo `auth` nas aplicações `data` e `pokemons`.
+Nessa branch concluiremos nosso workshop. Vamos Adicionar autenticação e gerenciamento de estado na aplicação pokemons.
 
-## Configurando o módulo Data
+## Pokemons
 
-Nesse módulo já deixei a configuração de todos os atributos, menos a do atributo `remotes`.
+Na view de pokemons temos os cards "mockados", vamos mudar isso para consumir os cards da API.
 
-Vamos adicionar ao `remotes` o módulo `auth`:
-
-```
- new ModuleFederationPlugin({
-        ...
-        remotes: {
-          auth: process.env.AUTH_MODULE
-        },
-        ...
-```
-
-Pronto, só precisamos disso para consumir todos os módulos expostos por `auth`.
-
-## Adicionando AuthProvider
-
-No `App.js` de `data` vamos adicionar o `AuthProvider`.
+A primeira coisa que precisamos fazer é importar o contexto responsável pelo gerenciamento do estado de pokemons: o 
+PokemonContext, do módulo `data`.
 
 ```
-import AuthProvider from 'auth/AuthProvider';
+import { PokemonContext } from 'data/PokemonProvider';
 ```
 
+Depois disso precisamos adicionar no component o useContext e substituir o dado "mockado" pelo dado do conxto.
+
 ```
-function App() {
+import React, { useContext, useEffect } from 'react';
+import { AppBar, Box, Container } from '@material-ui/core';
+import { PokemonContext } from 'data/PokemonProvider';
+
+import Logo from '../components/Logo';
+import CardGrid from '../components/CardGrid';
+
+const Pokemons = () => {
+  const { fetch, loading, pokemons } = useContext(PokemonContext);
+
+  useEffect(() => {
+    fetch({});
+  }, [fetch]);
+
   return (
-    <>
-      <CssBaseline />
-      <AuthProvider>
-          <PokemonProvider>
-              <Router />
-          </PokemonProvider>
-      </AuthProvider>
-    </>
+    <div>
+      <AppBar position="static">
+        <Box p={1}>
+          <Logo width="100px" />
+        </Box>
+      </AppBar>
+
+      <Container>
+        <Box mt={2}>
+          <CardGrid cards={pokemons} loading={loading} />
+        </Box>
+      </Container>
+    </div>
   );
-}
-```
-
-## Adicionando as rotas de autenticação
-
-Em `router/Router` da aplicação `data`, vamos adicionar as rotas de autenticação.
-
-```
-import authRoutes from 'auth/routes';
-
-const internalAuthRoutes = authRoutes({ redirectWhenSignIn: '/search' });
-```
-
-O `Switch` do Router fica assim:
-
-```
-<Switch>
-    {internalAuthRoutes.map((route) => (
-      <Route
-        key={route.path}
-        path={route.path}
-        component={route.component}
-        exact={route.exact}
-      />
-    ))}
-
-    {dataRoutes.map((route) => (
-      <Route
-        key={route.path}
-        path={route.path}
-        component={route.component}
-        exact={route.exact}
-      />
-    ))}
-
-    <Redirect to={'/search'} />
-</Switch>
-```
-
-## Tornando Search privado
-
-Em `router/routes` vamos adicionar o PrivateRoute, na rota `/search`.
-
-```
-import React, { lazy } from 'react';
-import PrivateRoute from "auth/PrivateRoute";
-
-const Search = lazy(() => import('../views/Search'));
-
-const routes = () => {
-  return [
-    {
-      path: '/search',
-      component: (props) => (
-          <PrivateRoute {...props} component={Search} />
-      ),
-      exact: true,
-    },
-  ];
 };
 
-export default routes;
+export default Pokemons;
 ```
+
+## Search Bar
+
+Precisamos adicionar nossa barra de pesquisa para que possamos buscar cartas pelo nome. Para isso basta importar 
+nosso SearchBar.
+
+```
+import SearchBar from 'data/SearchBar';
+```
+
+E agora é só colocá-lo na tela:
+
+```
+<div>
+  <AppBar position="static">
+    <Box p={1}>
+      <Logo width="100px" />
+    </Box>
+  </AppBar>
+
+  <Container>
+    <Box mt={2}>
+      <Grid container>
+        <Grid item xs={12}>
+          <SearchBar/>
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={12}>
+          <Box mt={2}>
+            <CardGrid cards={pokemons} loading={loading} />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  </Container>
+</div>
+```
+
+Pronto! Com essa mudança temos um micro-frontend completo com rotas compartilhadas, estado compartilhado e 
+componentes compartilhados.
+
+Espero que vocês tenham gostado.
