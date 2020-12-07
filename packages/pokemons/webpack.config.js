@@ -31,7 +31,7 @@ module.exports = (_, args) => {
       contentBase: path.join(__dirname, 'dist'),
       publicPath: '/',
       historyApiFallback: true,
-      port: 3001,
+      port: 3003,
     },
 
     resolve: {
@@ -75,7 +75,7 @@ module.exports = (_, args) => {
           },
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpg|gif|webp)$/,
           use: ['file-loader'],
         },
         {
@@ -100,7 +100,7 @@ module.exports = (_, args) => {
       }),
       new Dotenv({
         safe: true,
-          path: envPath
+        path: envPath,
       }),
     ],
   };
