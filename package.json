@@ -1,0 +1,26 @@
+{
+  "name": "ws-module-federation",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Workshop - ModuleFederation",
+  "author": "greg.almeidasilva@gmail.com",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"wsrun --parallel run start\"",
+    "start": "concurrently \"wsrun --parallel run docker:up\"",
+    "docker:build:dev": "concurrently \"wsrun --parallel run docker:build:dev\""
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "webpack-dev-server": "^3.11.0",
+    "wsrun": "^5.2.0",
+    "prettier": "^2.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.2"
+  },
+  "license": "ISC"
+}
