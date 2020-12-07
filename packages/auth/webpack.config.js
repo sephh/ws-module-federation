@@ -119,10 +119,6 @@ module.exports = (_, args) => {
             requiredVersion: dependencies['react'],
             singleton: true,
           },
-          axios: {
-            requiredVersion: dependencies['axios'],
-            singleton: true,
-          },
         },
       }),
       new HtmlWebpackPlugin({
