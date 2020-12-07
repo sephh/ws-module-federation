@@ -26,18 +26,18 @@ const EmptyResultContainer = styled.div`
 
 const EmptyResult = ({ message, width }) => {
   return (
-      <EmptyResultContainer>
-          <div className="empty-result">
-              <img
-                  className="empty-result__image"
-                  width={width}
-                  src={psyduck}
-                  alt={'Empty Result'}
-              />
+    <EmptyResultContainer>
+      <div className="empty-result">
+        <img
+          className="empty-result__image"
+          width={width}
+          src={psyduck}
+          alt={'Empty Result'}
+        />
 
-              <span className="empty-result__message text-muted">{message}</span>
-          </div>
-      </EmptyResultContainer>
+        <span className="empty-result__message text-muted">{message}</span>
+      </div>
+    </EmptyResultContainer>
   );
 };
 

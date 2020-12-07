@@ -6,7 +6,6 @@ const Authenticated = () => {
 
   return (
     <div className="authenticated">
-
       <div className="authenticated__content">
         <h2>Você está logado, na aplicação Auth.</h2>
 
@@ -18,7 +17,6 @@ const Authenticated = () => {
           <label>Email</label>: {currentUser?.email}
         </div>
       </div>
-
     </div>
   );
 };

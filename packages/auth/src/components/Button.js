@@ -20,11 +20,7 @@ const Button = ({ children, loading, ...props }) => {
 
   return (
     <div className={classes.wrapper}>
-      <MaterialButton
-          {...props}
-      >
-        {children}
-      </MaterialButton>
+      <MaterialButton {...props}>{children}</MaterialButton>
       {loading && (
         <CircularProgress size={24} className={classes.buttonProgress} />
       )}
