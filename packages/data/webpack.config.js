@@ -18,11 +18,11 @@ module.exports = (_, args) => {
     mode: args.mode,
 
     optimization: {
-      hints: args.mode === 'production' ? 'warning' : false,
+      minimize: args.mode === 'production',
     },
 
     performance: {
-      hints: args.mode === 'production',
+      hints: args.mode === 'production' ? 'warning' : false,
     },
 
     output: {
