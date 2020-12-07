@@ -89,7 +89,9 @@ Com ModuleFederation precisamos apenas identificar essas dependências no atribu
 
 Vamos importar nosso `package.json` e usar todas as dependências como shared, sem grande esforço.
 
+```
 const dependencies = require('./package.json').dependencies;
+```
 
 ```
 new ModuleFederationPlugin({

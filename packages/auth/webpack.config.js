@@ -1,6 +1,8 @@
 const path = require('path');
+const dependencies = require('./package.json').dependencies;
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 const envPaths = {
   production: path.resolve('./', `.env.production`),
@@ -94,6 +96,35 @@ module.exports = (_, args) => {
     },
 
     plugins: [
+      new ModuleFederationPlugin({
+        name: 'auth',
+        filename: 'remoteEntry.js',
+        exposes: {
+          './routes': './src/router/routes',
+          './PrivateRoute': './src/router/PrivateRoute',
+          './AuthProvider': './src/providers/AuthProvider',
+        },
+        remotes: {},
+        shared: {
+          ...dependencies,
+          'react-router-dom': {
+            requiredVersion: dependencies['react-router-dom'],
+            singleton: true,
+          },
+          'react-dom': {
+            requiredVersion: dependencies['react-dom'],
+            singleton: true,
+          },
+          react: {
+            requiredVersion: dependencies['react'],
+            singleton: true,
+          },
+          axios: {
+            requiredVersion: dependencies['axios'],
+            singleton: true,
+          },
+        },
+      }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         base: process.env.PUBLIC_URL || '/',
