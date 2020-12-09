@@ -119,6 +119,9 @@ module.exports = (_, args) => {
             requiredVersion: dependencies['react'],
             singleton: true,
           },
+          '@material-ui/styles': {
+            singleton: true,
+          },
         },
       }),
       new HtmlWebpackPlugin({
