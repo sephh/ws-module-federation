@@ -125,6 +125,9 @@ module.exports = (_, args) => {
             requiredVersion: dependencies['axios'],
             singleton: true,
           },
+          '@material-ui/styles': {
+            singleton: true,
+          },
         },
       }),
       new HtmlWebpackPlugin({
