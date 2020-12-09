@@ -99,8 +99,7 @@ module.exports = (_, args) => {
       new ModuleFederationPlugin({
         name: 'pokemons',
         filename: process.env.FILENAME,
-        exposes: {
-        },
+        exposes: {},
         remotes: {
           auth: process.env.AUTH_MODULE,
           data: process.env.DATA_MODULE,
@@ -117,6 +116,9 @@ module.exports = (_, args) => {
           },
           react: {
             requiredVersion: dependencies['react'],
+            singleton: true,
+          },
+          '@material-ui/styles': {
             singleton: true,
           },
         },
